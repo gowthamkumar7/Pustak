@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Pustak</string>
+    <string name="text_hint_no_notes">Oh! There\'s no notes !!  \n\n   Click on \'+\' to ADD</string>
+    <string name="text_create_note">Create a Note</string>
+    <string name="text_hint_title">Title</string>
+    <string name="text_add">Add</string>
+    <string name="text_note">Note</string>
+    <string name="text_delete">Delete</string>
+</resources>
