@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
+    <item
+        android:id="@+id/menu_remind"
+        android:enabled="true"
+        android:icon="@drawable/ic_add_alarm"
+        android:iconTint="@color/colorWhite"
+        android:title="@string/text_reminder"
+        app:showAsAction="always" />
     <item
         android:id="@+id/menu_save"
         android:enabled="true"
         android:icon="@drawable/ic_save"
         android:iconTint="@color/colorWhite"
-        android:title="Save"
+        android:title="@string/text_save"
         app:showAsAction="always" />
+
 </menu>

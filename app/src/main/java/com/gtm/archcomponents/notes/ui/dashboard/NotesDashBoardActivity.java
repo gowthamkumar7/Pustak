@@ -90,34 +90,19 @@ public class NotesDashBoardActivity extends BaseActivity {
         alarmStartTime.set(Calendar.HOUR_OF_DAY, 17);
         alarmStartTime.set(Calendar.MINUTE, 24);
         alarmStartTime.set(Calendar.SECOND, 30);
-        Intent intent1 = new Intent(this, NotificationBroadCast.class);
+
+
+        Intent intent1 = new Intent(".notes.utility.NotificationBroadCast");
+        intent1.setClass(this, NotificationBroadCast.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this,
                 234, intent1,
                 PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
+
         am.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, 0,
-                1000 * 60 *30, pendingIntent);
+                1000 * 60, pendingIntent);
 
-       /* Intent intent = new Intent(Intent.ACTION_INSERT)
-                .setData(CalendarContract.Events.CONTENT_URI)
-                .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, )
-                .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endTime.getTimeInMillis())
-                .putExtra(CalendarContract.Events.TITLE, "Yoga")
-                .putExtra(CalendarContract.Events.DESCRIPTION, "Group class")
-                .putExtra(CalendarContract.Events.EVENT_LOCATION, "The gym")
-                .putExtra(CalendarContract.Events.AVAILABILITY, CalendarContract.Events.AVAILABILITY_BUSY)
-                .putExtra(Intent.EXTRA_EMAIL, "rowan@example.com,trevor@example.com");
-        startActivity(intent);*/
 
-        /*Calendar cal = Calendar.getInstance();
-        Intent intent = new Intent(Intent.ACTION_EDIT);
-        intent.setType("vnd.android.cursor.item/event");
-        intent.putExtra("beginTime", cal.getTimeInMillis());
-        intent.putExtra("allDay", true);
-        intent.putExtra("rrule", "FREQ=YEARLY");
-        intent.putExtra("endTime", cal.getTimeInMillis()+60*60*1000);
-        intent.putExtra("title", "A Test Event from android app");
-        startActivity(intent);*/
     }
 
 

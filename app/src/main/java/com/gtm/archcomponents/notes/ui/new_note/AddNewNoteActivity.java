@@ -1,12 +1,16 @@
 package com.gtm.archcomponents.notes.ui.new_note;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import androidx.lifecycle.ViewModelProvider;
 
@@ -20,35 +24,33 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-public class AddNewNoteActivity extends BaseActivity {
+public class AddNewNoteActivity extends BaseActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
     private NotesViewModel notesViewModel;
     private EditText mEdNote;
     private EditText mEdNoteTitle;
     private TextView mTvNoteDate;
+    private Calendar calendarInstance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().setTitle(getString(R.string.text_create_note));
-
+        calendarInstance = Calendar.getInstance();
         notesViewModel = new ViewModelProvider(this).get(NotesViewModel.class);
-        Button btnAdd = findViewById(R.id.btn_add);
         mEdNote = findViewById(R.id.ed_note);
         mEdNoteTitle = findViewById(R.id.ed_note_title);
         mTvNoteDate = findViewById(R.id.ed_note_date);
-
         mTvNoteDate.setText(getCurrentDateAndTime());
+
+
+
+
        /* notesViewModel.mAllNotes.observe(this, notes -> {
             for (int i = 0; i < notes.size(); i++) {
                 Toast.makeText(AddNewNoteActivity.this, "" + notes.get(i).getNote(), Toast.LENGTH_SHORT).show();
             }
 
         });*/
-
-        btnAdd.setOnClickListener(v -> {
-
-
-        });
 
 
     }
@@ -83,6 +85,13 @@ public class AddNewNoteActivity extends BaseActivity {
 
             finish();
 
+        } else if (item.getItemId() == R.id.menu_remind) {
+
+            DatePickerDialog datePickerDialog = new DatePickerDialog(AddNewNoteActivity.this, this, calendarInstance
+                    .get(Calendar.YEAR), calendarInstance.get(Calendar.MONTH),
+                    calendarInstance.get(Calendar.DAY_OF_MONTH));
+            datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
+            datePickerDialog.show();
         }
 
         return true;
@@ -97,4 +106,21 @@ public class AddNewNoteActivity extends BaseActivity {
 
 
     }
+
+    @Override
+    public void onDateSet(DatePicker view, int onDateSet, int month, int dayOfMonth) {
+        Log.d("AddNewNite", "onDateSet: " + onDateSet + "-" + month + "-" + dayOfMonth);
+        TimePickerDialog timePickerDialog = new TimePickerDialog(AddNewNoteActivity.this, this,
+                calendarInstance.get(Calendar.HOUR_OF_DAY), calendarInstance.get(Calendar.MINUTE), false);
+        timePickerDialog.show();
+
+    }
+
+    @Override
+    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+
+
+        Log.d("AddNewNite", "onTimeSet: " + hourOfDay + ":" + minute);
+    }
+
 }
