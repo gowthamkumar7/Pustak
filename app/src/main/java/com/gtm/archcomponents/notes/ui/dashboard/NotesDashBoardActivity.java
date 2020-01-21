@@ -1,7 +1,5 @@
 package com.gtm.archcomponents.notes.ui.dashboard;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,9 +18,7 @@ import com.gtm.archcomponents.base.BaseActivity;
 import com.gtm.archcomponents.notes.room.Notes;
 import com.gtm.archcomponents.notes.ui.adapter.NotesAdapter;
 import com.gtm.archcomponents.notes.ui.new_note.AddNewNoteActivity;
-import com.gtm.archcomponents.notes.utility.NotificationBroadCast;
 
-import java.util.Calendar;
 import java.util.List;
 
 import io.reactivex.disposables.CompositeDisposable;
@@ -43,7 +39,6 @@ public class NotesDashBoardActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         TextView mTvHint = findViewById(R.id.id_tv_hint_no_notes);
         getSupportActionBar().setTitle(getTitle());
-        addEventInCalendar();
         setTitle(getString(R.string.app_name));
         //Create a new NOTE
         FloatingActionButton fabNewNote = findViewById(R.id.fab_new_note);
@@ -79,29 +74,6 @@ public class NotesDashBoardActivity extends BaseActivity {
 
             notesAdapter.setNotes(notes);
         });
-
-    }
-
-
-    private void addEventInCalendar() {
-
-
-        Calendar alarmStartTime = Calendar.getInstance();
-        alarmStartTime.set(Calendar.HOUR_OF_DAY, 17);
-        alarmStartTime.set(Calendar.MINUTE, 24);
-        alarmStartTime.set(Calendar.SECOND, 30);
-
-
-        Intent intent1 = new Intent(".notes.utility.NotificationBroadCast");
-        intent1.setClass(this, NotificationBroadCast.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this,
-                234, intent1,
-                PendingIntent.FLAG_UPDATE_CURRENT);
-        AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
-
-        am.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, 0,
-                1000 * 60, pendingIntent);
-
 
     }
 

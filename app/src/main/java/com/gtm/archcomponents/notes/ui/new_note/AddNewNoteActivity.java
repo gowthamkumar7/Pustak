@@ -1,7 +1,10 @@
 package com.gtm.archcomponents.notes.ui.new_note;
 
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -18,6 +21,8 @@ import com.gtm.archcomponents.R;
 import com.gtm.archcomponents.base.BaseActivity;
 import com.gtm.archcomponents.notes.room.Notes;
 import com.gtm.archcomponents.notes.room.NotesViewModel;
+import com.gtm.archcomponents.notes.utility.NotificationBroadCast;
+import com.gtm.archcomponents.notes.utility.Util;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -30,6 +35,11 @@ public class AddNewNoteActivity extends BaseActivity implements DatePickerDialog
     private EditText mEdNoteTitle;
     private TextView mTvNoteDate;
     private Calendar calendarInstance;
+    private int hour;
+    private int min;
+    private int year;
+    private int month;
+    private int date;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,9 +51,6 @@ public class AddNewNoteActivity extends BaseActivity implements DatePickerDialog
         mEdNoteTitle = findViewById(R.id.ed_note_title);
         mTvNoteDate = findViewById(R.id.ed_note_date);
         mTvNoteDate.setText(getCurrentDateAndTime());
-
-
-
 
        /* notesViewModel.mAllNotes.observe(this, notes -> {
             for (int i = 0; i < notes.size(); i++) {
@@ -92,9 +99,39 @@ public class AddNewNoteActivity extends BaseActivity implements DatePickerDialog
                     calendarInstance.get(Calendar.DAY_OF_MONTH));
             datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
             datePickerDialog.show();
+
         }
 
         return true;
+    }
+
+
+    /**
+     * Add a notification reminder
+     */
+    private void addReminder() {
+        Calendar alarmStartTime = Calendar.getInstance();
+        alarmStartTime.set(Calendar.HOUR_OF_DAY, this.hour);
+        alarmStartTime.set(Calendar.MINUTE, this.min);
+        alarmStartTime.set(Calendar.DATE, this.date);
+        alarmStartTime.set(Calendar.SECOND, 0);
+        alarmStartTime.set(Calendar.YEAR, this.year);
+        alarmStartTime.set(Calendar.MONTH, this.month);
+
+
+        Intent intent = new Intent(".notes.utility.NotificationBroadCast");
+        intent.putExtra(Util.KEY_TITLE, mEdNoteTitle.getText().toString());
+        intent.putExtra(Util.KEY_NOTE, mEdNote.getText().toString());
+        intent.setClass(this, NotificationBroadCast.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this,
+                234, intent,
+                PendingIntent.FLAG_UPDATE_CURRENT);
+        AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
+
+        am.set(AlarmManager.RTC_WAKEUP, alarmStartTime.getTimeInMillis(), pendingIntent);
+       /* am.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, 0,
+                1000 * 60, pendingIntent);*/
+
     }
 
     @Override
@@ -107,20 +144,27 @@ public class AddNewNoteActivity extends BaseActivity implements DatePickerDialog
 
     }
 
+
     @Override
-    public void onDateSet(DatePicker view, int onDateSet, int month, int dayOfMonth) {
-        Log.d("AddNewNite", "onDateSet: " + onDateSet + "-" + month + "-" + dayOfMonth);
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+        Log.d("AddNewNite", "onDateSet: " + year + "-" + month + "-" + dayOfMonth);
         TimePickerDialog timePickerDialog = new TimePickerDialog(AddNewNoteActivity.this, this,
                 calendarInstance.get(Calendar.HOUR_OF_DAY), calendarInstance.get(Calendar.MINUTE), false);
         timePickerDialog.show();
+        this.year = year;
+        this.month = month;
+        this.date = dayOfMonth;
+
 
     }
 
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
 
-
-        Log.d("AddNewNite", "onTimeSet: " + hourOfDay + ":" + minute);
+        this.hour = hourOfDay;
+        this.min = minute;
+        Log.d("AddNewNite", "AddNewNite: " + hourOfDay + ":" + minute);
+        addReminder();
     }
 
 }

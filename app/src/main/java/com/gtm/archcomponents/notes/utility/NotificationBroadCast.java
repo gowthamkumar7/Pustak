@@ -31,8 +31,8 @@ public class NotificationBroadCast extends BroadcastReceiver {
         }
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context, "YOUR_CHANNEL_ID")
                 .setSmallIcon(R.mipmap.ic_launcher) // notification icon
-                .setContentTitle("Reminder") //  title for notification
-                .setContentText("" + System.currentTimeMillis())// message for notification
+                .setContentTitle(intent.getStringExtra(Util.KEY_TITLE)) //  title for notification
+                .setContentText(intent.getStringExtra(Util.KEY_NOTE))// message for notification
                 .setAutoCancel(true)
                 .setChannelId("123"); // clear notification after click
         mBuilder.setContentIntent(pendingIntent1);
