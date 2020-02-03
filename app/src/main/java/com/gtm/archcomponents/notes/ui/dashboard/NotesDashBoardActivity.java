@@ -21,13 +21,12 @@ import com.gtm.archcomponents.notes.ui.new_note.AddNewNoteActivity;
 
 import java.util.List;
 
-import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
 public class NotesDashBoardActivity extends BaseActivity {
 
     private NotesAdapter notesAdapter;
-    private CompositeDisposable compositeDisposable;
+
     private boolean isDeleted;
     private int selectedPosition;
     private NotesDashBoardViewModel notesDashBoardViewModel;
@@ -37,6 +36,7 @@ public class NotesDashBoardActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         TextView mTvHint = findViewById(R.id.id_tv_hint_no_notes);
         getSupportActionBar().setTitle(getTitle());
         setTitle(getString(R.string.app_name));
@@ -61,7 +61,7 @@ public class NotesDashBoardActivity extends BaseActivity {
 
         );
 
-        compositeDisposable = new CompositeDisposable();
+
         compositeDisposable.add(disposable);
         notesDashBoardViewModel.mAllNotes.observe(this, notes -> {
 
@@ -76,6 +76,7 @@ public class NotesDashBoardActivity extends BaseActivity {
         });
 
     }
+
 
 
     @Override
@@ -115,22 +116,10 @@ public class NotesDashBoardActivity extends BaseActivity {
      * Retrieve the data from DB and delete the selected note.
      */
     private void deleteSelectedNote() {
-
         Notes note = this.mNotes.get(selectedPosition);
-
         int noteId = note.getId();
-
-
         notesDashBoardViewModel.deleteSelectedNote(note);
-
-
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        compositeDisposable.clear();
-        compositeDisposable.dispose();
 
-    }
 }

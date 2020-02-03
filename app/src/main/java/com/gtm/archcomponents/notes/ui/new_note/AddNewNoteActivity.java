@@ -6,7 +6,6 @@ import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -45,6 +44,8 @@ public class AddNewNoteActivity extends BaseActivity implements DatePickerDialog
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().setTitle(getString(R.string.text_create_note));
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
         calendarInstance = Calendar.getInstance();
         notesViewModel = new ViewModelProvider(this).get(NotesViewModel.class);
         mEdNote = findViewById(R.id.ed_note);
@@ -60,6 +61,12 @@ public class AddNewNoteActivity extends BaseActivity implements DatePickerDialog
         });*/
 
 
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 
     @Override
@@ -81,7 +88,9 @@ public class AddNewNoteActivity extends BaseActivity implements DatePickerDialog
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         super.onOptionsItemSelected(item);
-        if (item.getItemId() == R.id.menu_save) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+        } else if (item.getItemId() == R.id.menu_save) {
             String note = mEdNote.getText().toString();
             String noteTitle = mEdNoteTitle.getText().toString();
             String currentTime = getCurrentDateAndTime();
@@ -147,7 +156,6 @@ public class AddNewNoteActivity extends BaseActivity implements DatePickerDialog
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        Log.d("AddNewNite", "onDateSet: " + year + "-" + month + "-" + dayOfMonth);
         TimePickerDialog timePickerDialog = new TimePickerDialog(AddNewNoteActivity.this, this,
                 calendarInstance.get(Calendar.HOUR_OF_DAY), calendarInstance.get(Calendar.MINUTE), false);
         timePickerDialog.show();
@@ -163,7 +171,6 @@ public class AddNewNoteActivity extends BaseActivity implements DatePickerDialog
 
         this.hour = hourOfDay;
         this.min = minute;
-        Log.d("AddNewNite", "AddNewNite: " + hourOfDay + ":" + minute);
         addReminder();
     }
 
