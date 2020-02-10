@@ -2,11 +2,16 @@ package com.gtm.archcomponents.notes.room;
 
 import android.annotation.SuppressLint;
 import android.app.Application;
-import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
 
 import java.util.List;
+
+import io.reactivex.Completable;
+import io.reactivex.CompletableObserver;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 
 /**
@@ -17,6 +22,7 @@ public class NotesRepository {
     private NotesDatabase notesDatabase;
     private NotesDao notesDao;
     private LiveData<List<Notes>> mAllNotes;
+
 
     public NotesRepository(Application application) {
         notesDatabase = NotesDatabase.getInstance(application);
@@ -29,60 +35,52 @@ public class NotesRepository {
     @SuppressLint("CheckResult")
     public void insertNote(final Notes notes) {
         //Insertion should happen at the background.
-        new InsertAsync(notes).execute();
-
-
-      /*  Single.fromCallable(new Callable<Notes>() {
+        Completable.fromAction(() -> notesDao.insertNotes(notes)
+        ).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread()).subscribe(new CompletableObserver() {
             @Override
-            public Notes call() throws Exception {
-                notesDao.insertNotes(notes);
-                return null;
-            }
-        })
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());*/
+            public void onSubscribe(Disposable d) {
 
+            }
+
+            @Override
+            public void onComplete() {
+
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                //Todo Handle error
+
+            }
+        });
 
     }
 
     public void deleteNote(Notes note) {
+        Completable.fromAction(() -> notesDao.deleteNote(note)
+        ).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread()).subscribe(new CompletableObserver() {
+            @Override
+            public void onSubscribe(Disposable d) {
 
-        new DeleteNoteAsync(note).execute();
+            }
+
+            @Override
+            public void onComplete() {
+
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                //Todo Handle error
+
+            }
+        });
     }
 
-    //TODO to be replaced with RxJava
-    @SuppressLint("StaticFieldLeak")
-    private class InsertAsync extends AsyncTask<Void, Void, Void> {
-
-
-        Notes notes;
-
-        public InsertAsync(Notes notes) {
-            this.notes = notes;
-        }
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            notesDao.insertNotes(notes);
-            return null;
-        }
-    }
-
-    private class DeleteNoteAsync extends AsyncTask<Void, Void, Void> {
-
-        Notes note;
-
-        public DeleteNoteAsync(Notes note) {
-            this.note = note;
-        }
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-
-            notesDao.deleteNote(note);
-            return null;
-        }
-    }
 
     public LiveData<List<Notes>> getAllNotes() {
         return mAllNotes;

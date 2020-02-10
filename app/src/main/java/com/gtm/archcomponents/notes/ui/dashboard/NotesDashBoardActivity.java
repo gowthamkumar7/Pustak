@@ -78,7 +78,6 @@ public class NotesDashBoardActivity extends BaseActivity {
     }
 
 
-
     @Override
     public int getLayoutResource() {
         return R.layout.activity_notes_dash_board;
@@ -92,11 +91,19 @@ public class NotesDashBoardActivity extends BaseActivity {
 
     }
 
+    /**
+     * hide the delete menu
+     */
+    private void hideMenu() {
+        mMenu.findItem(R.id.menu_delete).setVisible(false);
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
         if (item.getItemId() == R.id.menu_delete) {
             deleteSelectedNote();
+            hideMenu();
         }
 
 
