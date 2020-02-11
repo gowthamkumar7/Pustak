@@ -10,16 +10,16 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".notes.ui.new_note.AddNewNoteActivity" />
-        <activity android:name=".WordsActivity" />
-        <activity android:name=".notes.ui.dashboard.NotesDashBoardActivity">
+        <activity android:name="com.gtm.pustak.notes.ui.new_note.AddNewNoteActivity" />
+        <activity android:name="com.gtm.pustak.WordsActivity" />
+        <activity android:name="com.gtm.pustak.notes.ui.dashboard.NotesDashBoardActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <receiver android:name=".notes.utility.NotificationBroadCast"/>
+        <receiver android:name="com.gtm.pustak.notes.utility.NotificationBroadCast"/>
     </application>
 
 </manifest>
