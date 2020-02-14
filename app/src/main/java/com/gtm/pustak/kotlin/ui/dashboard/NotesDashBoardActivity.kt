@@ -2,7 +2,6 @@ package com.gtm.pustak.kotlin.ui.dashboard
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -53,7 +52,7 @@ class NotesDashBoardActivity : BaseActivity() {
         val disposable: Disposable = notesAdapter.getlongClickedItemPosition().subscribe { position ->
             this.selectedPosition = position
             showMenu()
-            Log.d("NotesDashBoardActivity", "" + position)
+
         }
         compositeDisposable.add(disposable)
 

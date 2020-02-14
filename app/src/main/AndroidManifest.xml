@@ -11,10 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="false"
         android:theme="@style/AppTheme">
-        <activity android:name=".kotlin.ui.new_note.AddNewNoteActivity"></activity>
-       <!-- <activity android:name=".kotlin.notes.NotesDashBoardActivity" />-->
-
-        <!--<activity android:name=".notes.ui.new_note.AddNewNoteActivity" />-->
+        <activity android:name=".kotlin.ui.view_notes.ViewNotesActivity"></activity>
+        <activity android:name=".kotlin.ui.new_note.AddNewNoteActivity" /> <!-- <activity android:name=".kotlin.notes.NotesDashBoardActivity" /> -->
+        <!-- <activity android:name=".notes.ui.new_note.AddNewNoteActivity" /> -->
         <activity android:name=".WordsActivity" />
         <activity android:name=".kotlin.ui.dashboard.NotesDashBoardActivity">
             <intent-filter>
