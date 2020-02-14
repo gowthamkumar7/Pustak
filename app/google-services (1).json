@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:459996598452:android:22eed084eb0843ebef87e1",
         "android_client_info": {
-          "package_name": "com.gtm.pustak.debug"
+          "package_name": "com.gtm.pustak"
         }
       },
       "oauth_client": [

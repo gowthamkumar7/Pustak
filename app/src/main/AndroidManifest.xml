@@ -1,25 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.gtm.archcomponents">
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    package="com.gtm.pustak">
+
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher"
-        android:supportsRtl="true"
+        android:supportsRtl="false"
         android:theme="@style/AppTheme">
-        <activity android:name="com.gtm.pustak.notes.ui.new_note.AddNewNoteActivity" />
-        <activity android:name="com.gtm.pustak.WordsActivity" />
-        <activity android:name="com.gtm.pustak.notes.ui.dashboard.NotesDashBoardActivity">
+        <activity android:name=".kotlin.ui.new_note.AddNewNoteActivity"></activity>
+       <!-- <activity android:name=".kotlin.notes.NotesDashBoardActivity" />-->
+
+        <!--<activity android:name=".notes.ui.new_note.AddNewNoteActivity" />-->
+        <activity android:name=".WordsActivity" />
+        <activity android:name=".kotlin.ui.dashboard.NotesDashBoardActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <receiver android:name="com.gtm.pustak.notes.utility.NotificationBroadCast"/>
+
+        <receiver android:name=".notes.utility.NotificationBroadCast" />
     </application>
 
 </manifest>

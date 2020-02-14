@@ -10,7 +10,7 @@ import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
 
-import com.gtm.archcomponents.R;
+import com.gtm.pustak.R;
 import com.gtm.pustak.notes.ui.dashboard.NotesDashBoardActivity;
 
 public class NotificationBroadCast extends BroadcastReceiver {

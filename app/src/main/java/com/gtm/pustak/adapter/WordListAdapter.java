@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.gtm.archcomponents.R;
+import com.gtm.pustak.R;
 import com.gtm.pustak.room.Word;
 
 import java.util.List;

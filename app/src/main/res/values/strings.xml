@@ -1,11 +1,15 @@
 <resources>
-    <string name="app_name">Pustak</string>
+    <string name="app_name">Pustak-debug</string>
     <string name="text_hint_no_notes">Oh! There\'s no notes !!  \n\n   Click on \'+\' to ADD</string>
     <string name="text_create_note">Create a Note</string>
     <string name="text_hint_title">Title</string>
-    <string name="text_add">Add</string>
     <string name="text_note">Note</string>
     <string name="text_delete">Delete</string>
     <string name="text_save">Save</string>
     <string name="text_reminder">Reminder</string>
+
+
+    <!--Content description-->
+    <string name="content_des_note_selection">Note Selection</string>
+    <string name="title_activity_base">BaseActivity</string>
 </resources>

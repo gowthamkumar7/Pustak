@@ -9,7 +9,7 @@ import androidx.room.Query;
 import java.util.List;
 
 @Dao
-public interface WordDao {
+interface WordDao {
 
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)

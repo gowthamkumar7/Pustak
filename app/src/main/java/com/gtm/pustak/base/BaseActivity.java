@@ -7,7 +7,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import com.gtm.archcomponents.R;
+
+import com.gtm.pustak.R;
 
 import io.reactivex.disposables.CompositeDisposable;
 
@@ -35,7 +36,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        //todo clear observable disposable here.
+       /* compositeDisposable.clear();
+        compositeDisposable.dispose();*/
     }
 
     @Override

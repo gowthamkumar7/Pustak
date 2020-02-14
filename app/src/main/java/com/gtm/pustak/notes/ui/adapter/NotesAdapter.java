@@ -10,7 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.gtm.archcomponents.R;
+import com.gtm.pustak.R;
 import com.gtm.pustak.notes.room.Notes;
 
 import java.util.List;

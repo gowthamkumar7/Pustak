@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.gtm.archcomponents.R;
 import com.gtm.pustak.adapter.WordListAdapter;
 import com.gtm.pustak.room.Word;
 import com.gtm.pustak.room.WordViewModel;

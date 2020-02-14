@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.gtm.archcomponents.R;
+import com.gtm.pustak.R;
 import com.gtm.pustak.base.BaseActivity;
 import com.gtm.pustak.notes.room.Notes;
 import com.gtm.pustak.notes.ui.adapter.NotesAdapter;
