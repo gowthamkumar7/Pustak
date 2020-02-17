@@ -15,6 +15,7 @@ import android.widget.TextView
 import android.widget.TimePicker
 import androidx.lifecycle.ViewModelProvider
 import com.gtm.pustak.R
+import com.gtm.pustak.kotlin.Utils
 import com.gtm.pustak.kotlin.base.BaseActivity
 import com.gtm.pustak.notes.room.Notes
 import com.gtm.pustak.notes.room.NotesViewModel
@@ -55,7 +56,7 @@ class AddNewNoteActivity : BaseActivity(), DatePickerDialog.OnDateSetListener, T
         mEdNote = findViewById(R.id.ed_note)
         mEdNoteTitle = findViewById(R.id.ed_note_title)
         mTvNoteDate = findViewById(R.id.ed_note_date)
-        mTvNoteDate?.text = getCurrentDateAndTime()
+        mTvNoteDate?.text = Utils.getTimeWithoutSeconds(getCurrentDateAndTime())
     }
 
 
@@ -67,7 +68,7 @@ class AddNewNoteActivity : BaseActivity(), DatePickerDialog.OnDateSetListener, T
 
     private fun getCurrentDateAndTime(): String {
         var date: Date = Calendar.getInstance().time
-        return SimpleDateFormat("dd MMM hh:mm aa", Locale.getDefault()).format(date)
+        return SimpleDateFormat("dd MMM hh:mm:ss aa", Locale.getDefault()).format(date)
     }
 
 
@@ -84,6 +85,32 @@ class AddNewNoteActivity : BaseActivity(), DatePickerDialog.OnDateSetListener, T
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+
+        val itemId = item?.itemId
+
+        when (itemId) {
+            android.R.id.home -> onBackPressed()
+
+            R.id.menu_save -> {
+                val note = mEdNote?.text.toString()
+                val noteTitle = mEdNoteTitle?.text.toString()
+                val currentTime = getCurrentDateAndTime()
+                val modifiedTime = getCurrentDateAndTime()
+
+                val notes = Notes(note, noteTitle, currentTime, modifiedTime)
+                notesViewModel?.insertNote(notes)
+
+                finish()
+            }
+
+            R.id.menu_remind -> {
+                val datePickerDialog = DatePickerDialog(this@AddNewNoteActivity, this, calendarInstance!!.get(Calendar.YEAR), calendarInstance!!.get(Calendar.MONTH),
+                        calendarInstance!!.get(Calendar.DAY_OF_MONTH))
+                datePickerDialog.datePicker.minDate = System.currentTimeMillis()
+                datePickerDialog.show()
+
+            }
+        }
 
         if (item?.itemId == android.R.id.home) {
             onBackPressed()

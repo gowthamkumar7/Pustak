@@ -8,6 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.gtm.pustak.R
+import com.gtm.pustak.kotlin.Utils
 import com.gtm.pustak.notes.room.Notes
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
@@ -37,7 +38,10 @@ class NotesAdapter(context: Context) : RecyclerView.Adapter<NotesAdapter.NotesVi
 
         holder.notesBody.text = notesList!!.get(position).note
         holder.notesTitle.text = (notesList!!.get(position).getNoteTitle())
-        holder.notesTime.text = (notesList!!.get(position).getCreated_time())
+
+        var createdTime = Utils.getTimeWithoutSeconds(notesList!!.get(position).created_time)
+
+        holder.notesTime.text = (createdTime)
     }
 
     fun setNotes(notes: List<Notes>) {
