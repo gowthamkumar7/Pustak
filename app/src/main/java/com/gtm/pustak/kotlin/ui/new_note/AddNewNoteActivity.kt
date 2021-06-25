@@ -10,11 +10,10 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.DatePicker
-import android.widget.EditText
-import android.widget.TextView
 import android.widget.TimePicker
 import androidx.lifecycle.ViewModelProvider
 import com.gtm.pustak.R
+import com.gtm.pustak.databinding.ActivityAddNewNoteBinding
 import com.gtm.pustak.kotlin.Utils
 import com.gtm.pustak.kotlin.base.BaseActivity
 import com.gtm.pustak.notes.room.Notes
@@ -24,14 +23,11 @@ import com.gtm.pustak.notes.utility.Util
 import java.text.SimpleDateFormat
 import java.util.*
 
-class AddNewNoteActivity : BaseActivity(), DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
+class AddNewNoteActivity : BaseActivity<ActivityAddNewNoteBinding>(), DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
 
 
     private var calendarInstance: Calendar? = null
     private var notesViewModel: NotesViewModel? = null
-    private var mEdNote: EditText? = null
-    private var mEdNoteTitle: EditText? = null
-    private var mTvNoteDate: TextView? = null
 
 
     private var year: Int = 0
@@ -40,8 +36,8 @@ class AddNewNoteActivity : BaseActivity(), DatePickerDialog.OnDateSetListener, T
     private var hourOfDay: Int = 0
     private var minute: Int = 0
 
-    override fun getLayoutResource(): Int {
-        return R.layout.activity_add_new_note
+    override fun getLayoutResource(): ActivityAddNewNoteBinding {
+        return ActivityAddNewNoteBinding.inflate(layoutInflater)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,10 +49,9 @@ class AddNewNoteActivity : BaseActivity(), DatePickerDialog.OnDateSetListener, T
         calendarInstance = Calendar.getInstance()
         notesViewModel = ViewModelProvider(this).get(NotesViewModel::class.java)
 
-        mEdNote = findViewById(R.id.ed_note)
-        mEdNoteTitle = findViewById(R.id.ed_note_title)
-        mTvNoteDate = findViewById(R.id.ed_note_date)
-        mTvNoteDate?.text = Utils.getTimeWithoutSeconds(getCurrentDateAndTime())
+
+
+        binding?.edNoteDate?.text = Utils.getTimeWithoutSeconds(getCurrentDateAndTime())
     }
 
 
@@ -92,8 +87,8 @@ class AddNewNoteActivity : BaseActivity(), DatePickerDialog.OnDateSetListener, T
             android.R.id.home -> onBackPressed()
 
             R.id.menu_save -> {
-                val note = mEdNote?.text.toString()
-                val noteTitle = mEdNoteTitle?.text.toString()
+                val note = binding?.edNote?.text.toString()
+                val noteTitle = binding?.edNoteTitle?.text.toString()
                 val currentTime = getCurrentDateAndTime()
                 val modifiedTime = getCurrentDateAndTime()
 
@@ -115,8 +110,8 @@ class AddNewNoteActivity : BaseActivity(), DatePickerDialog.OnDateSetListener, T
         if (item?.itemId == android.R.id.home) {
             onBackPressed()
         } else if (item?.itemId == R.id.menu_save) {
-            val note = mEdNote?.text.toString()
-            val noteTitle = mEdNoteTitle?.text.toString()
+            val note = binding?.edNote?.text.toString()
+            val noteTitle = binding?.edNoteTitle?.text.toString()
             val currentTime = getCurrentDateAndTime()
             val modifiedTime = getCurrentDateAndTime()
 
@@ -160,8 +155,8 @@ class AddNewNoteActivity : BaseActivity(), DatePickerDialog.OnDateSetListener, T
         alarmStartTime.set(Calendar.MONTH, this.month)
 
         val intent = Intent(".notes.utility.NotificationBroadCast");
-        intent.putExtra(Util.KEY_NOTE, mEdNote?.text.toString())
-        intent.putExtra(Util.KEY_TITLE, mEdNoteTitle?.text.toString())
+        intent.putExtra(Util.KEY_NOTE, binding?.edNote?.text.toString())
+        intent.putExtra(Util.KEY_TITLE, binding?.edNoteTitle?.text.toString())
         intent.setClass(this, NotificationBroadCast::class.java)
 
         val pendingIntent = PendingIntent.getBroadcast(this, 234, intent, PendingIntent.FLAG_UPDATE_CURRENT)

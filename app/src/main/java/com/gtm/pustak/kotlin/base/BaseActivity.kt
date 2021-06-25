@@ -7,20 +7,21 @@ import androidx.appcompat.widget.Toolbar
 import com.gtm.pustak.R
 import io.reactivex.disposables.CompositeDisposable
 
-abstract class BaseActivity : AppCompatActivity() {
+abstract class BaseActivity<B> : AppCompatActivity() {
 
 
     var toolbar: Toolbar? = null
+    var binding: B? = null
     lateinit var compositeDisposable: CompositeDisposable
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(getLayoutResource())
+        binding = getLayoutResource()
         toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
         compositeDisposable = CompositeDisposable()
     }
 
-    abstract fun getLayoutResource(): Int
+    abstract fun getLayoutResource(): B
 
     fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()

@@ -37,7 +37,7 @@ public class NotesDashBoardActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        TextView mTvHint = findViewById(R.id.id_tv_hint_no_notes);
+        TextView mTvHint = findViewById(R.id.tv_hint_no_notes);
         getSupportActionBar().setTitle(getTitle());
         setTitle(getString(R.string.app_name));
         //Create a new NOTE

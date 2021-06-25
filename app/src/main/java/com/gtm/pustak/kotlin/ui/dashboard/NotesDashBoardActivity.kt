@@ -10,43 +10,43 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewbinding.ViewBinding
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.gtm.pustak.R
+import com.gtm.pustak.databinding.ActivityNotesDashBoardBinding
 import com.gtm.pustak.kotlin.base.BaseActivity
 import com.gtm.pustak.kotlin.ui.adapter.NotesAdapter
 import com.gtm.pustak.kotlin.ui.new_note.AddNewNoteActivity
 import com.gtm.pustak.notes.room.Notes
 import io.reactivex.disposables.Disposable
+import kotlinx.android.synthetic.main.activity_notes_dash_board.*
 
-class NotesDashBoardActivity : BaseActivity() {
+class NotesDashBoardActivity : BaseActivity<ActivityNotesDashBoardBinding>() {
 
     var selectedPosition = 0
     var mNotes: List<Notes>? = null
     lateinit var mMenu: Menu
     lateinit var notesDashBoardViewModel: NotesDashBoardViewModel
-    override fun getLayoutResource(): Int {
-        return R.layout.activity_notes_dash_board
+    override fun getLayoutResource(): ActivityNotesDashBoardBinding {
+        return ActivityNotesDashBoardBinding.inflate(layoutInflater)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val mTvHint: TextView = findViewById(R.id.id_tv_hint_no_notes)
         supportActionBar?.setTitle(title)
         title = getString(R.string.app_name)
-        val fabNewNote = findViewById<FloatingActionButton>(R.id.fab_new_note)
 
-        fabNewNote.setOnClickListener {
+        binding!!.fabNewNote.setOnClickListener {
             startActivity(Intent(this@NotesDashBoardActivity, AddNewNoteActivity::class.java))
         }
 
-        val mRcvNotes = findViewById<RecyclerView>(R.id.recyclerView)
 
         notesDashBoardViewModel = ViewModelProvider(this).get(NotesDashBoardViewModel::class.java)
 
         val notesAdapter = NotesAdapter(this)
-        mRcvNotes.layoutManager = GridLayoutManager(this, 2)
-        mRcvNotes.adapter = notesAdapter
+        binding!!.recyclerView.layoutManager = GridLayoutManager(this, 2)
+        binding!!.recyclerView.adapter = notesAdapter
 
 
         val disposable: Disposable = notesAdapter.getlongClickedItemPosition().subscribe { position ->
@@ -62,9 +62,9 @@ class NotesDashBoardActivity : BaseActivity() {
 
 
             if (notes.isEmpty()) {
-                mTvHint.visibility = View.VISIBLE
+                binding!!.tvHintNoNotes.visibility = View.VISIBLE
             } else {
-                mTvHint.visibility = View.GONE
+                binding!!.tvHintNoNotes.visibility = View.GONE
             }
             notesAdapter.setNotes(notes)
         })
