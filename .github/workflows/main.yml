@@ -34,7 +34,7 @@ jobs:
     
       - name: Build all artifacts
         id: buildAllApks
-        uses: eskatos/`-command-action@v1.3.3
+        uses: eskatos/-command-action@v1.3.3
             
       - name : Andriod Emulator
         uses: ReactiveCircus/android-emulator-runner@v2.19.0
