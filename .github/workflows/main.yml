@@ -28,6 +28,9 @@ jobs:
 
       - name: Setup Java JDK
         uses: actions/setup-java@v2.1.0
+        with: 
+            java-version : '11'
+            distribution: 'adopt' 
     
       - name: Build all artifacts
         id: buildAllApks
