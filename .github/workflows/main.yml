@@ -23,17 +23,33 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2.3.3
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
+      - name: Setup Java JDK
+        uses: actions/setup-java@v2.1.0
+    
+      - name: Build all artifacts
+        id: buildAllApks
+        uses: eskatos/gradle-command-action@v1.3.3
+        with:
+            gradle-version: current
+            wrapper-cache-enabled: true
+            dependencies-cache-enabled: true
+            configuration-cache-enabled: true
+            arguments: assembleDebug
+     
+      - name : Andriod Emulator
+        uses: ReactiveCircus/android-emulator-runner@v2.19.0
+        with:
+            api-level: 23
+            target: default
+            arch: x86
+            profile: Nexus 6
+            script: ./gradlew connectedCheck --stacktrace   
 
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
-      - name: Android Builder
-        uses: b4s36t4/Android-Action@0.0.1
-      
+      - name: Upload my APK
+        uses: actions/upload-artifact@v2.2.4
+        with:
+          name: Debug build
+          path: app/build/outputs/apk/debug/app-artifact-*.apk
