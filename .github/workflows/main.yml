@@ -33,8 +33,10 @@ jobs:
             distribution: 'adopt' 
     
       - name: Build all artifacts
-        id: buildAllApks
+        id : buildAllApks
         uses: eskatos/gradle-command-action@v1.3.3
+        with:
+           gradle-version : rc
                     
       - name : Andriod Emulator
         uses: ReactiveCircus/android-emulator-runner@v2.19.0
