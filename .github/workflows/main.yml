@@ -38,14 +38,14 @@ jobs:
         with:
            gradle-version : rc
                     
-      - name : Andriod Emulator
-        uses: ReactiveCircus/android-emulator-runner@v2.19.0
-        with:
-            api-level: 23
-            target: default
-            arch: x86
-            profile: Nexus 6
-            script: ./gradlew connectedCheck --stacktrace   
+  #    - name : Andriod Emulator
+  #      uses: ReactiveCircus/android-emulator-runner@v2.19.0
+  #      with:
+  #          api-level: 23
+  #          target: default
+  #          arch: x86
+  #          profile: Nexus 6
+  #          script: ./gradlew connectedCheck --stacktrace   
 
       - name: Upload my APK
         uses: actions/upload-artifact@v2.2.4
