@@ -35,10 +35,7 @@ jobs:
       - name: Build all artifacts
         id: buildAllApks
         uses: eskatos/gradle-command-action@v1.3.3
-        with:
-            gradle-version: '4.0.1'
-
-            
+                    
       - name : Andriod Emulator
         uses: ReactiveCircus/android-emulator-runner@v2.19.0
         with:
