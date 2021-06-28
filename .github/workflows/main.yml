@@ -2,9 +2,7 @@
 
 name: Pustak Test
 
-defaults:
-  run:
-    working-directory: Pustak
+
 # Controls when the workflow will run
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
@@ -50,12 +48,14 @@ jobs:
   #          arch: x86
   #          profile: Nexus 6
   #          script: ./gradlew connectedCheck --stacktrace   
-
+      - name : Build apk
+        run : ./gradlew build
+        
       - name: Upload my APK
         uses: actions/upload-artifact@v2.2.4
         with:
           name: Debug build
           if-no-files-found: error
-          path: /build
+          path: app/build/outputs/apk/debug/app-debug.apk
           
 
